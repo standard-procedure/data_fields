@@ -1,13 +1,13 @@
 require_relative "lib/data_fields/version"
 Gem::Specification.new do |spec|
-  spec.name        = "standard_procedure_data_fields"
-  spec.version     = DataFields::VERSION
-  spec.authors     = [ "Rahoul Baruah" ]
-  spec.email       = [ "rahoulb@echodek.co" ]
-  spec.homepage    = "https://theartandscienceofruby,com/"
-  spec.summary     = "Standard Procedure: DataFields"
+  spec.name = "standard_procedure_data_fields"
+  spec.version = DataFields::VERSION
+  spec.authors = ["Rahoul Baruah"]
+  spec.email = ["rahoulb@echodek.co"]
+  spec.homepage = "https://theartandscienceofruby,com/"
+  spec.summary = "Standard Procedure: DataFields"
   spec.description = "DataFields"
-  spec.license     = "LGPL"
+  spec.license = "LGPL"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.com"
 
