@@ -1,7 +1,8 @@
 require "rails_helper"
 
-RSpec.describe DataFields::Checkbox, type: :model do
+RSpec.describe DataFields::Decimal, type: :model do
   let(:container) { MyContainer.create!(name: "Test Container") }
+
   describe "validations" do
     it "is invalid without a name" do
       field = described_class.new(name: "", container: container)
@@ -10,13 +11,18 @@ RSpec.describe DataFields::Checkbox, type: :model do
     end
 
     it "is valid with a name and container" do
-      field = described_class.new(name: "Accept Terms", container: container)
+      field = described_class.new(name: "Price", container: container)
       expect(field).to be_valid
     end
-    
+
     context "when required and data_value?" do
-      it "is valid if value is true" do
-        field = described_class.new(name: "Agree", data_field_type: :data_value, value: true, container: container)
+      it "is valid if value is present" do
+        field = described_class.new(
+          name: "Cost",
+          data_field_type: :data_value,
+          container: container,
+          value: 99.99
+        )
         field.required = true
         expect(field).to be_valid
       end
@@ -24,14 +30,14 @@ RSpec.describe DataFields::Checkbox, type: :model do
   end
 
   describe "#to_html" do
-    it "renders ☑️ if value is true" do
-      field = described_class.new(value: true)
-      expect(field.to_html).to eq("☑️")
+    it "renders the float value as string" do
+      field = described_class.new(value: 42.5)
+      expect(field.to_html).to eq("42.5")
     end
 
-    it "renders 🆇 if value is false" do
-      field = described_class.new(value: false)
-      expect(field.to_html).to eq("🆇")
+    it "returns empty string if value is nil" do
+      field = described_class.new(value: nil)
+      expect(field.to_html).to eq("")
     end
   end
 
@@ -44,12 +50,6 @@ RSpec.describe DataFields::Checkbox, type: :model do
 
       result = field.copy_into(collection)
       expect(result).to eq(:copied)
-    end
-  end
-
-  describe "data_field_type enum" do
-    it "includes :data_value, :form_field_definition, :metadata_field_definition, and :archived" do
-      expect(described_class.data_field_types.keys).to include("data_value", "form_field_definition", "metadata_field_definition", "archived")
     end
   end
 end

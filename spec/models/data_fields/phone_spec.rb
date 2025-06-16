@@ -1,7 +1,8 @@
 require "rails_helper"
 
-RSpec.describe DataFields::Checkbox, type: :model do
+RSpec.describe DataFields::Number, type: :model do
   let(:container) { MyContainer.create!(name: "Test Container") }
+
   describe "validations" do
     it "is invalid without a name" do
       field = described_class.new(name: "", container: container)
@@ -10,28 +11,16 @@ RSpec.describe DataFields::Checkbox, type: :model do
     end
 
     it "is valid with a name and container" do
-      field = described_class.new(name: "Accept Terms", container: container)
+      field = described_class.new(name: "Enter a Number", container: container)
       expect(field).to be_valid
     end
-    
+
     context "when required and data_value?" do
-      it "is valid if value is true" do
-        field = described_class.new(name: "Agree", data_field_type: :data_value, value: true, container: container)
+      it "is valid if value is a number" do
+        field = described_class.new(name: "Age", data_field_type: :data_value, value: 42, container: container)
         field.required = true
         expect(field).to be_valid
       end
-    end
-  end
-
-  describe "#to_html" do
-    it "renders ☑️ if value is true" do
-      field = described_class.new(value: true)
-      expect(field.to_html).to eq("☑️")
-    end
-
-    it "renders 🆇 if value is false" do
-      field = described_class.new(value: false)
-      expect(field.to_html).to eq("🆇")
     end
   end
 
@@ -39,7 +28,7 @@ RSpec.describe DataFields::Checkbox, type: :model do
     let(:collection) { double("collection") }
 
     it "copies itself into the collection" do
-      field = described_class.new(name: "Original", data_field_type: :form_field_definition)
+      field = described_class.new(name: "Original Number", data_field_type: :form_field_definition)
       allow(collection).to receive(:where).with(copied_from: field).and_return(double(first_or_create!: :copied))
 
       result = field.copy_into(collection)
