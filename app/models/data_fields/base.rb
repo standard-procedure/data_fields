@@ -1,10 +1,10 @@
 module DataFields
-  class Base < ActiveRecord::Base
+  class Base < ApplicationRecord
     self.abstract_class = true
     self.table_name = "data_fields"
     include PgSearch::Model
 
-    pg_search_scope :search, against: %i[name summary], using: { tsearch: { dictionary: "english", tsvector_column: "search_index" } }
+    pg_search_scope :search, against: %i[name summary], using: {tsearch: {dictionary: "english", tsvector_column: "search_index"}}
 
     scope :metadata_field_definitions, -> { metadata_field_definition.where(container: nil).order(:position) }
     scope :form_field_definitions, -> { form_field_definition.order(:position) }
@@ -19,13 +19,12 @@ module DataFields
       positioned on: %i[container parent]
       @_positioned_data_fields_base = true
     end
-    
 
     unless defined?(@@_data_fields_base_enum)
       enum :data_field_type, data_value: 0,
-                             form_field_definition: 1,
-                             metadata_field_definition: 2,
-                             archived: -1
+        form_field_definition: 1,
+        metadata_field_definition: 2,
+        archived: -1
       @@_data_fields_base_enum = true
     end
 
@@ -34,7 +33,7 @@ module DataFields
     include HasDataAttributes
 
     validates :name, presence: true
-    validates :name, uniqueness: { scope: %i[container parent] }, if: -> { !data_value? && !archived? }
+    validates :name, uniqueness: {scope: %i[container parent]}, if: -> { !data_value? && !archived? }
 
     attribute :value
     attribute :data, default: {}
@@ -66,40 +65,9 @@ module DataFields
     end
 
     def to_label = model_name.human
+
     def to_html = value.to_s
+
     def definition_requires_options? = false
-
-    def self.field_types = FIELD_TYPES
-
-    FieldTypeName = Data.define(:class_name, :name, :klass, :element)
-
-    FIELD_TYPES = [
-      DataFields::Checkbox,
-      DataFields::Date,
-      DataFields::DateTime,
-      DataFields::Decimal,
-      DataFields::Email,
-      DataFields::File,
-      DataFields::Image,
-      DataFields::Model,
-      DataFields::MultiSelect,
-      DataFields::Number,
-      DataFields::Phone,
-      DataFields::RichText,
-      DataFields::Select,
-      DataFields::Text,
-      DataFields::Time,
-      DataFields::Url,
-      DataFields::Signature
-    ].map { |field_type|
-      FieldTypeName.new(
-        class_name: field_type.to_s,
-        name: field_type.model_name.human,
-        klass: field_type,
-        element: field_type.model_name.element
-      )
-    }.freeze
-
-    private_constant :FIELD_TYPES, :FieldTypeName
   end
 end
