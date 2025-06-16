@@ -4,5 +4,4 @@ require "pg_search"
 require "positioning"
 
 module DataFields
-  # Your code goes here...
 end
