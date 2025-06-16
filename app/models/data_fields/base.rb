@@ -1,5 +1,7 @@
 module DataFields
-  class Base < ApplicationRecord
+  class Base < ActiveRecord::Base
+    self.abstract_class = true
+    self.table_name = "data_fields"
     include PgSearch::Model
 
     pg_search_scope :search, against: %i[name summary], using: { tsearch: { dictionary: "english", tsvector_column: "search_index" } }
@@ -10,14 +12,22 @@ module DataFields
     belongs_to :container, polymorphic: true, optional: true
     validates :container, presence: true, if: -> { form_field_definition? || data_value? }
 
-    has_and_belongs_to_many :service_types, class_name: "ServiceType" # You might stub this out in the test app
-
     belongs_to :parent, class_name: "DataFields::Base", optional: true
     belongs_to :copied_from, class_name: "DataFields::Base", optional: true
 
-    positioned on: %i[container parent] # If this is a custom concern, make sure it's included in the engine
+    unless defined?(@_positioned_data_fields_base)
+      positioned on: %i[container parent]
+      @_positioned_data_fields_base = true
+    end
+    
 
-    enum :data_field_type, data_value: 0, form_field_definition: 1, metadata_field_definition: 2, archived: -1
+    unless defined?(@@_data_fields_base_enum)
+      enum :data_field_type, data_value: 0,
+                             form_field_definition: 1,
+                             metadata_field_definition: 2,
+                             archived: -1
+      @@_data_fields_base_enum = true
+    end
 
     include HasMetadata
     include HasName
