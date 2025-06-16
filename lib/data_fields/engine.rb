@@ -7,7 +7,5 @@ module DataFields
       g.assets false
       g.helper false
     end
-
-    config.autoload_paths << root.join("app/models").to_s
   end
 end
