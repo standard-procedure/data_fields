@@ -1,0 +1,2 @@
+class MyContainer < ApplicationRecord
+end

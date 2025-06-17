@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_13_153932) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_16_082549) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,29 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_13_153932) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "data_fields_fields", force: :cascade do |t|
+    t.string "container_type"
+    t.integer "container_id"
+    t.integer "parent_id"
+    t.integer "position"
+    t.integer "data_field_type", default: 0, null: false
+    t.string "type"
+    t.string "name", default: "", null: false
+    t.text "metadata"
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["container_type", "container_id"], name: "index_data_fields_fields_on_container"
+    t.index ["parent_id"], name: "index_data_fields_fields_on_parent_id"
+  end
+
+  create_table "my_containers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "data_fields_fields", "data_fields_fields", column: "parent_id"
 end
