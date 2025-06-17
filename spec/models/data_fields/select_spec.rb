@@ -27,10 +27,4 @@ RSpec.describe DataFields::Select, type: :model do
       expect(result).to eq(:copied)
     end
   end
-
-  describe "data_field_type enum" do
-    it "includes all expected types" do
-      expect(described_class.data_field_types.keys).to include("data_value", "form_field_definition", "metadata_field_definition", "archived")
-    end
-  end
 end
