@@ -57,8 +57,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_082549) do
     t.integer "data_field_type", default: 0, null: false
     t.string "type"
     t.string "name", default: "", null: false
-    t.json "metadata"
-    t.json "data"
+    t.text "metadata"
+    t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["container_type", "container_id"], name: "index_data_fields_on_container"

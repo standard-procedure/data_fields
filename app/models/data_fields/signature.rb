@@ -1,6 +1,6 @@
 module DataFields
   class Signature < Base
-    data_attribute :value, default: ""
+    has_attribute :value, default: ""
     validate :signature_present_if_required, if: -> { data_value? && required? }, on: :update
 
     def to_html = value.blank? ? "" : "<img src=\"#{value}\" alt=\"Signature\" style=\"max-width: 100%; height: auto;\" />".html_safe

@@ -7,8 +7,8 @@ class CreateDataFields < ActiveRecord::Migration[8.0]
       t.integer :data_field_type, default: 0, null: false
       t.string :type
       t.string :name, null: false, default: ""
-      t.json :metadata
-      t.json :data
+      t.text :metadata
+      t.text :data
       t.timestamps
     end
   end

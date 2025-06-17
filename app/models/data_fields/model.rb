@@ -1,7 +1,7 @@
 module DataFields
   class Model < Base
-    data_attribute :value, :string
-    metadata_attribute :class_name, :string, default: ""
+    has_attribute :value, :string
+    metahas_attribute :class_name, :string, default: ""
 
     validates :value, presence: true, if: -> { data_value? && required? }, on: :update
     validate :value_is_correct_class, if: -> { data_value? }, on: :update
