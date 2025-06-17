@@ -29,8 +29,6 @@ module DataFields
     has_attribute :allow_files, :boolean, default: false, field_name: "metadata"
     has_attribute :default_value, :string, default: "", field_name: "metadata"
     has_attribute :calculated_value, :string, default: "", field_name: "metadata"
-    has_attribute :applies_to, :string, default: "", field_name: "metadata"
-    has_attribute :field_name, :string, default: "hello", field_name: "metadata"
     has_attribute :repeat_group, :integer, default: 1
     has_rich_text :description
     has_rich_text :comments
