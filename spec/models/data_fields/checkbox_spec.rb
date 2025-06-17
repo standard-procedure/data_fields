@@ -1,17 +1,19 @@
 require "rails_helper"
 
 RSpec.describe DataFields::Checkbox, type: :model do
-  let(:container) { MyContainer.create!(name: "Test Container") }
-  describe "validations" do
-    it "is invalid without a name" do
-      field = described_class.new(name: "", container: container)
-      expect(field).not_to be_valid
-      expect(field.errors[:name]).to include("can't be blank")
-    end
+  it_behaves_like "a field"
 
-    it "is valid with a name and container" do
-      field = described_class.new(name: "Accept Terms", container: container)
-      expect(field).to be_valid
+  describe "#value" do
+    it "accepts form field values" do
+      field = described_class.create container: MyContainer.create, name: "Tick me", data_field_type: "data_value"
+
+      field.update! value: "1"
+
+      expect(field.value).to be true
+
+      field.update! value: "0"
+
+      expect(field.value).to be false
     end
   end
 
@@ -24,24 +26,6 @@ RSpec.describe DataFields::Checkbox, type: :model do
     it "renders 🆇 if value is false" do
       field = described_class.new(value: false)
       expect(field.to_html).to eq("🆇")
-    end
-  end
-
-  describe "#copy_into" do
-    let(:collection) { double("collection") }
-
-    it "copies itself into the collection" do
-      field = described_class.new(name: "Original", data_field_type: :form_field_definition)
-      allow(collection).to receive(:where).with(copied_from: field).and_return(double(first_or_create!: :copied))
-
-      result = field.copy_into(collection)
-      expect(result).to eq(:copied)
-    end
-  end
-
-  describe "data_field_type enum" do
-    it "includes :data_value, :form_field_definition, :metadata_field_definition, and :archived" do
-      expect(described_class.data_field_types.keys).to include("data_value", "form_field_definition", "metadata_field_definition", "archived")
     end
   end
 end
