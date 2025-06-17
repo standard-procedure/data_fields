@@ -1,5 +1,9 @@
+require "has_attributes"
+
 module DataFields
   class Base < ApplicationRecord
+    # serialize :data, type: Hash, coder: JSON
+    # serialize :metadata, type: Hash, coder: JSON
     self.abstract_class = true
     self.table_name = "data_fields"
     include PgSearch::Model
@@ -28,9 +32,14 @@ module DataFields
       @@_data_fields_base_enum = true
     end
 
-    include HasMetadata
     include HasName
-    include HasDataAttributes
+    include HasAttributes
+
+    serialize :data, type: Hash, coder: JSON
+
+
+    has_attribute :repeat_group, :integer
+    has_attribute :required, :boolean, field_name: "metadata"
 
     validates :name, presence: true
     validates :name, uniqueness: {scope: %i[container parent]}, if: -> { !data_value? && !archived? }
@@ -38,14 +47,16 @@ module DataFields
     attribute :value
     attribute :data, default: {}
 
-    metadata_attribute :required, :boolean, default: false
-    metadata_attribute :allow_comments, :boolean, default: false
-    metadata_attribute :allow_files, :boolean, default: false
-    metadata_attribute :default_value, :string, default: ""
-    metadata_attribute :calculated_value, :string, default: ""
-    metadata_attribute :applies_to, :string, default: ""
+    has_attribute :required, :boolean, default: false, field_name: "metadata"
+    has_attribute :allow_comments, :boolean, default: false, field_name: "metadata"
+    has_attribute :allow_files, :boolean, default: false, field_name: "metadata"
+    has_attribute :default_value, :string, default: "", field_name: "metadata"
+    has_attribute :calculated_value, :string, default: "", field_name: "metadata"
+    has_attribute :applies_to, :string, default: "", field_name: "metadata"
+    # 
+    has_attribute :field_name, :string, default: "hello", field_name: "metadata"
 
-    data_attribute :repeat_group, :integer, default: 1
+    has_attribute :repeat_group, :integer, default: 1
 
     has_rich_text :description
     has_rich_text :comments

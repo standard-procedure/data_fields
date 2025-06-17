@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.version = DataFields::VERSION
   spec.authors = ["Rahoul Baruah"]
   spec.email = ["rahoulb@echodek.co"]
-  spec.homepage = "https://theartandscienceofruby,com/"
+  spec.homepage = "https://theartandscienceofruby.com/"
   spec.summary = "Standard Procedure: DataFields"
   spec.description = "DataFields"
   spec.license = "LGPL"
@@ -21,6 +21,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "rails", ">= 7.1.3"
   spec.add_dependency "standard_procedure_has_attributes"
+  spec.add_dependency "standard_procedure_global_id_serialiser"
   spec.add_dependency "positioning"
   spec.add_dependency "ancestry"
   spec.add_dependency "pg_search"

@@ -2,7 +2,7 @@ module DataFields::HasOptions
   extend ActiveSupport::Concern
 
   included do
-    metadata_attribute :options, default: {}
+    has_attribute :options, default: {}, field_name: "metadata"
   end
 
   def options_as_text = (options || {}).keys.map { |key| "#{key}=#{options[key]}" }.join("\n")

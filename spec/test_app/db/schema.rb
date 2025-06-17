@@ -65,12 +65,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_082549) do
     t.index ["parent_id"], name: "index_data_fields_on_parent_id"
   end
 
-  create_table "dummy_containers", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "my_containers", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
