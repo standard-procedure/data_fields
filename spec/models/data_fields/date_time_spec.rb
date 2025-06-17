@@ -10,7 +10,7 @@ RSpec.describe DataFields::DateTime, type: :model do
       expect(field.to_html).to eq(time.to_s)
     end
 
-    it "returns empty string if value is nil" do
+    it "returns an empty string if value is nil" do
       field = described_class.new(value: nil)
       expect(field.to_html).to eq("")
     end

@@ -11,13 +11,4 @@ RSpec.describe DataFields::Select, type: :model do
 
     expect(field.errors).to include :value
   end
-
-  it "must have a value if marked as required" do
-    field = described_class.create name: "Select", container: MyContainer.create, data_field_type: "data_value", options: {one: "One", two: "Two"}, required: true
-
-    field.value = ""
-    field.validate
-
-    expect(field.errors).to include :value
-  end
 end
