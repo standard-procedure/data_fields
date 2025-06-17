@@ -1,12 +1,10 @@
 require "has_attributes"
 
 module DataFields
-  class Base < ApplicationRecord
-    # serialize :data, type: Hash, coder: JSON
-    # serialize :metadata, type: Hash, coder: JSON
-    self.abstract_class = true
-    self.table_name = "data_fields"
+  class Field < ApplicationRecord
     include PgSearch::Model
+    include HasName
+    include HasAttributes
 
     pg_search_scope :search, against: %i[name summary], using: {tsearch: {dictionary: "english", tsvector_column: "search_index"}}
 
@@ -15,37 +13,17 @@ module DataFields
 
     belongs_to :container, polymorphic: true, optional: true
     validates :container, presence: true, if: -> { form_field_definition? || data_value? }
+    belongs_to :parent, class_name: "DataFields::Field", optional: true
+    belongs_to :copied_from, class_name: "DataFields::Field", optional: true
 
-    belongs_to :parent, class_name: "DataFields::Base", optional: true
-    belongs_to :copied_from, class_name: "DataFields::Base", optional: true
-
-    unless defined?(@_positioned_data_fields_base)
-      positioned on: %i[container parent]
-      @_positioned_data_fields_base = true
-    end
-
-    unless defined?(@@_data_fields_base_enum)
-      enum :data_field_type, data_value: 0,
-        form_field_definition: 1,
-        metadata_field_definition: 2,
-        archived: -1
-      @@_data_fields_base_enum = true
-    end
-
-    include HasName
-    include HasAttributes
-
+    positioned on: [:container, :parent]
+    enum :data_field_type, data_value: 0, form_field_definition: 1, metadata_field_definition: 2, archived: -1
     serialize :data, type: Hash, coder: JSON
-
-    has_attribute :repeat_group, :integer
-    has_attribute :required, :boolean, field_name: "metadata"
-
+    serialize :metadata, type: Hash, coder: JSON
     validates :name, presence: true
     validates :name, uniqueness: {scope: %i[container parent]}, if: -> { !data_value? && !archived? }
-
     attribute :value
     attribute :data, default: {}
-
     has_attribute :required, :boolean, default: false, field_name: "metadata"
     has_attribute :allow_comments, :boolean, default: false, field_name: "metadata"
     has_attribute :allow_files, :boolean, default: false, field_name: "metadata"
@@ -53,9 +31,7 @@ module DataFields
     has_attribute :calculated_value, :string, default: "", field_name: "metadata"
     has_attribute :applies_to, :string, default: "", field_name: "metadata"
     has_attribute :field_name, :string, default: "hello", field_name: "metadata"
-
     has_attribute :repeat_group, :integer, default: 1
-
     has_rich_text :description
     has_rich_text :comments
     has_many_attached :files

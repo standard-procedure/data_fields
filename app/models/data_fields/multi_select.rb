@@ -1,14 +1,14 @@
 module DataFields
-  class MultiSelect < Base
-    attribute :value, default: []
+  class MultiSelect < Field
     include DataFields::HasOptions
+    has_attribute :selected_values, default: []
     validate :selected_values_are_legal, if: -> { data_value? && required? }, on: :update
 
-    def value = Array.wrap(data["value"]).reject { |v| v.blank? }
+    def value = Array.wrap(selected_values).reject { |v| v.blank? }
 
     def value=(values)
       value_will_change!
-      data["value"] = Array.wrap(values)
+      self.selected_values = Array.wrap(values)
     end
 
     def label = options.slice(*value).values

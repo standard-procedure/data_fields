@@ -1,5 +1,5 @@
 module DataFields
-  class File < Base
+  class File < Field
     has_one_attached :value
     validate :file_is_attached, if: -> { data_value? && required? }, on: :update
 

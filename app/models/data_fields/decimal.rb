@@ -1,5 +1,5 @@
 module DataFields
-  class Decimal < Base
+  class Decimal < Field
     has_attribute :value, :float
     validates :value, presence: true, if: -> { data_value? && required? }, on: :update
   end

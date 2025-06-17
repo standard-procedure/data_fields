@@ -1,5 +1,5 @@
 module DataFields
-  class Signature < Base
+  class Signature < Field
     has_attribute :value, default: ""
     validate :signature_present_if_required, if: -> { data_value? && required? }, on: :update
 

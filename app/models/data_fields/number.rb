@@ -1,5 +1,5 @@
 module DataFields
-  class Number < Base
+  class Number < Field
     has_attribute :value, :integer
     validates :value, presence: true, if: -> { data_value? && required? }, on: :update
   end

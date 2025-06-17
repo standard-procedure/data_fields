@@ -1,5 +1,5 @@
 module DataFields
-  class Select < Base
+  class Select < Field
     include DataFields::HasOptions
     has_attribute :value, :string
     validate :selected_value_is_legal, if: -> { data_value? && required? }, on: :update

@@ -1,7 +1,7 @@
 module DataFields
   class Image < File
     include ImageToHtml
-    validate :file_is_image, if: -> { data_value? && required? }, on: :update
+    validate :file_is_image, if: -> { data_value? }, on: :update
 
     def to_html = image_tag_for(value, alt: to_s)
 

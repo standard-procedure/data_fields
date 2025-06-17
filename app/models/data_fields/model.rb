@@ -1,5 +1,5 @@
 module DataFields
-  class Model < Base
+  class Model < Field
     has_attribute :value, :string
     has_attribute :class_name, :string, default: "", field_name: "metadata"
 

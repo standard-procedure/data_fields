@@ -49,7 +49,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_082549) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "data_fields", force: :cascade do |t|
+  create_table "data_fields_fields", force: :cascade do |t|
     t.string "container_type"
     t.integer "container_id"
     t.integer "parent_id"
@@ -61,8 +61,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_082549) do
     t.text "data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["container_type", "container_id"], name: "index_data_fields_on_container"
-    t.index ["parent_id"], name: "index_data_fields_on_parent_id"
+    t.index ["container_type", "container_id"], name: "index_data_fields_fields_on_container"
+    t.index ["parent_id"], name: "index_data_fields_fields_on_parent_id"
   end
 
   create_table "my_containers", force: :cascade do |t|
@@ -73,5 +73,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_16_082549) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "data_fields", "data_fields", column: "parent_id"
+  add_foreign_key "data_fields_fields", "data_fields_fields", column: "parent_id"
 end
