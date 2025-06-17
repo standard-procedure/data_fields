@@ -9,7 +9,9 @@ RSpec.describe DataFields::Select, type: :model do
 
       expect(field.errors).to include :name
     end
+  end
 
+  describe "value" do
     it "only accepts values from its legal set of options" do
       field = described_class.create name: "Select", container: MyContainer.create, data_field_type: "data_value", options: {one: "One", two: "Two"}
 
