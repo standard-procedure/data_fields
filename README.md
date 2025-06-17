@@ -65,6 +65,5 @@ Add this line to your application's Gemfile:
 gem "standard_procedure_data_fields"
 ```
 
-
 ## License
 The gem is available as open source under the terms of the [LGPL License](/LICENCE).

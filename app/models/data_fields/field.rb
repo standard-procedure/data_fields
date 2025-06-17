@@ -2,11 +2,8 @@ require "has_attributes"
 
 module DataFields
   class Field < ApplicationRecord
-    include PgSearch::Model
     include HasName
     include HasAttributes
-
-    pg_search_scope :search, against: %i[name summary], using: {tsearch: {dictionary: "english", tsvector_column: "search_index"}}
 
     scope :metadata_field_definitions, -> { metadata_field_definition.where(container: nil).order(:position) }
     scope :form_field_definitions, -> { form_field_definition.order(:position) }

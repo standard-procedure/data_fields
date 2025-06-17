@@ -24,5 +24,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "standard_procedure_global_id_serialiser"
   spec.add_dependency "positioning"
   spec.add_dependency "ancestry"
-  spec.add_dependency "pg_search"
 end
