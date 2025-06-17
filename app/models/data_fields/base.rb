@@ -37,7 +37,6 @@ module DataFields
 
     serialize :data, type: Hash, coder: JSON
 
-
     has_attribute :repeat_group, :integer
     has_attribute :required, :boolean, field_name: "metadata"
 
@@ -53,7 +52,6 @@ module DataFields
     has_attribute :default_value, :string, default: "", field_name: "metadata"
     has_attribute :calculated_value, :string, default: "", field_name: "metadata"
     has_attribute :applies_to, :string, default: "", field_name: "metadata"
-    # 
     has_attribute :field_name, :string, default: "hello", field_name: "metadata"
 
     has_attribute :repeat_group, :integer, default: 1

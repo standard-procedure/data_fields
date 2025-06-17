@@ -16,7 +16,6 @@ RSpec.describe DataFields::File, type: :model do
     end
   end
 
-
   describe "#copy_into" do
     let(:collection) { double("collection") }
 

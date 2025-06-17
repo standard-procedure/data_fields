@@ -17,13 +17,13 @@ RSpec.describe DataFields::RichText, type: :model do
   end
 
   describe "#to_html" do
-  it "returns the rendered HTML of the rich text" do
-    field = described_class.new(name: "Info", container: container)
-    field.value = "Some <b>rich</b> content"
-    expected_html = "<div class=\"trix-content\">\n  Some <b>rich</b> content\n</div>\n"
-    expect(field.to_html).to eq(expected_html)
+    it "returns the rendered HTML of the rich text" do
+      field = described_class.new(name: "Info", container: container)
+      field.value = "Some <b>rich</b> content"
+      expected_html = "<div class=\"trix-content\">\n  Some <b>rich</b> content\n</div>\n"
+      expect(field.to_html).to eq(expected_html)
+    end
   end
-end
 
   describe "#copy_into" do
     let(:collection) { double("collection") }
