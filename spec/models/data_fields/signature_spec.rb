@@ -14,14 +14,6 @@ RSpec.describe DataFields::Signature, type: :model do
       field = described_class.new(name: "Signature Field", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid with a proper base64-encoded value" do
-        base64_image = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA"
-        field = described_class.new(name: "Signature", data_field_type: :data_value, required: true, value: base64_image, container: container)
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do

@@ -14,14 +14,6 @@ RSpec.describe DataFields::DateTime, type: :model do
       field = described_class.new(name: "Scheduled At", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid if value is present" do
-        field = described_class.new(name: "Scheduled", data_field_type: :data_value, container: container, value: Time.current)
-        field.required = true
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do

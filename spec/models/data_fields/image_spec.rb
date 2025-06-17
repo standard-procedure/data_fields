@@ -19,20 +19,20 @@ RSpec.describe DataFields::Image, type: :model do
   describe "#to_s" do
     it "returns filename if attached" do
       field = described_class.new(name: "Image Field", container: container)
-      file = fixture_file_upload(Rails.root.join("/spec/fixtures/files/logo.png"), "image/png")
+      file = fixture_file_upload(Rails.root.join("/logo.png"), "image/png")
       field.value.attach(file)
-      expect(field.to_s).to eq("sample.jpg")
+      expect(field.to_s).to eq("logo.png")
     end
   end
 
   describe "#to_html" do
     it "returns an HTML img tag for the image" do
       field = described_class.new(name: "Image Field", container: container)
-      file = fixture_file_upload(Rails.root.join("/spec/fixtures/files/logo.jpg"), "image/png")
+      file = fixture_file_upload(Rails.root.join("/logo.png"), "image/png")
       field.value.attach(file)
 
-      allow(field.value).to receive(:url).and_return("/rails/active_storage/blobs/sample.jpg")
-      expect(field.to_html).to eq("<img src='/rails/active_storage/blobs/sample.jpg' alt='sample.jpg'>")
+      allow(field.value).to receive(:url).and_return("/rails/active_storage/blobs/logo.png")
+      expect(field.to_html).to eq("<img src='/rails/active_storage/blobs/logo.png' alt='logo.png'>")
     end
   end
 

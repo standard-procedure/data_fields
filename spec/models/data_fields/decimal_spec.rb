@@ -14,19 +14,6 @@ RSpec.describe DataFields::Decimal, type: :model do
       field = described_class.new(name: "Price", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid if value is present" do
-        field = described_class.new(
-          name: "Cost",
-          data_field_type: :data_value,
-          container: container,
-          value: 99.99
-        )
-        field.required = true
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do

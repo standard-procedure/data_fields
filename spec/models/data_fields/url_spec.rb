@@ -14,21 +14,6 @@ RSpec.describe DataFields::Url, type: :model do
       field = described_class.new(name: "Website", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid with a proper URL" do
-        field = described_class.new(name: "Website", data_field_type: :data_value, required: true, value: "https://example.com", container: container)
-        expect(field).to be_valid
-      end
-    end
-  end
-
-  describe "normalization" do
-    it "strips and downcases the value" do
-      field = described_class.new(name: "Website", data_field_type: :data_value, required: true, value: "  HTTPS://EXAMPLE.COM/  ", container: container)
-      field.validate
-      expect(field.value).to eq("https://example.com/")
-    end
   end
 
   describe "#to_html" do

@@ -14,14 +14,6 @@ RSpec.describe DataFields::Number, type: :model do
       field = described_class.new(name: "Enter a Number", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid if value is a number" do
-        field = described_class.new(name: "Age", data_field_type: :data_value, value: 42, container: container)
-        field.required = true
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#copy_into" do

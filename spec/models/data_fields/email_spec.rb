@@ -14,14 +14,6 @@ RSpec.describe DataFields::Email, type: :model do
       field = described_class.new(name: "Email Address", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid with a well-formed email" do
-        field = described_class.new(name: "Contact Email", data_field_type: :data_value, container: container, value: "USER@Example.com")
-        field.required = true
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do

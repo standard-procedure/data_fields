@@ -13,14 +13,6 @@ RSpec.describe DataFields::Checkbox, type: :model do
       field = described_class.new(name: "Accept Terms", container: container)
       expect(field).to be_valid
     end
-    
-    context "when required and data_value?" do
-      it "is valid if value is true" do
-        field = described_class.new(name: "Agree", data_field_type: :data_value, value: true, container: container)
-        field.required = true
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do

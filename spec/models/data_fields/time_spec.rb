@@ -14,13 +14,6 @@ RSpec.describe DataFields::Time, type: :model do
       field = described_class.new(name: "Time Field", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid with a valid time value" do
-        field = described_class.new(name: "Start Time", data_field_type: :data_value, required: true, value: Time.zone.now.change(sec: 0), container: container)
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do

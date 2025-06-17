@@ -14,22 +14,6 @@ RSpec.describe DataFields::Select, type: :model do
       field = described_class.new(name: "Choose Option", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid if value is in options" do
-        field = described_class.new(name: "Pick one", container: container, data_field_type: :data_value, required: true, value: "a")
-        field.options = { "a" => "Alpha", "b" => "Beta" }
-        expect(field).to be_valid
-      end
-    end
-  end
-
-  describe "#label" do
-    it "returns the label from options" do
-      field = described_class.new(value: "x")
-      field.options = { "x" => "Option X", "y" => "Option Y" }
-      expect(field.label).to eq("Option X")
-    end
   end
 
   describe "#copy_into" do

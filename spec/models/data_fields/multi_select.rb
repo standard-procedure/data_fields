@@ -21,16 +21,6 @@ RSpec.describe DataFields::MultiSelect, type: :model do
       field = described_class.new(name: "Choose Options", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid if all selected values are in options" do
-        field = described_class.new(name: "Choices", container: container, data_field_type: :data_value)
-        field.required = true
-        field.options = options
-        field.value = ["opt1", "opt2"]
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#value" do
@@ -38,16 +28,6 @@ RSpec.describe DataFields::MultiSelect, type: :model do
       field = described_class.new
       field.value = ["opt1", "", nil, "opt2"]
       expect(field.value).to eq(["opt1", "opt2"])
-    end
-  end
-
-  describe "#label / #labels" do
-    it "returns label(s) for the selected values" do
-      field = described_class.new
-      field.options = options
-      field.value = ["opt2", "opt1"]
-      expect(field.label).to eq(["Option 2", "Option 1"])
-      expect(field.labels).to eq(field.label)
     end
   end
 

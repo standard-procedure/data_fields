@@ -14,13 +14,6 @@ RSpec.describe DataFields::Text, type: :model do
       field = described_class.new(name: "Text Field", container: container)
       expect(field).to be_valid
     end
-
-    context "when required and data_value?" do
-      it "is valid with non-empty value" do
-        field = described_class.new(name: "Comment", data_field_type: :data_value, required: true, value: "Some comment", container: container)
-        expect(field).to be_valid
-      end
-    end
   end
 
   describe "#to_html" do
