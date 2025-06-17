@@ -1,50 +1,39 @@
 require "rails_helper"
 
 RSpec.describe DataFields::Image, type: :model do
-  let(:container) { MyContainer.create!(name: "Test Container") }
+  it_behaves_like "a field"
 
-  describe "validations" do
-    it "is invalid without a name" do
-      field = described_class.new(name: "", container: container)
-      expect(field).not_to be_valid
-      expect(field.errors[:name]).to include("can't be blank")
-    end
+  it "must be attached if the field is required" do
+    field = described_class.create! name: "Picture this", container: MyContainer.create, required: true
 
-    it "is valid with a name and container" do
-      field = described_class.new(name: "Upload Image", container: container)
-      expect(field).to be_valid
-    end
+    field.validate
+
+    expect(field.errors).to include :value
+  end
+
+  it "must be an image" do
+    field = described_class.create! name: "Picture this", container: MyContainer.create
+
+    field.value.attach fixture_file_upload("policy.docx")
+    field.validate
+
+    expect(field.errors).to include :value
   end
 
   describe "#to_s" do
     it "returns filename if attached" do
-      field = described_class.new(name: "Image Field", container: container)
-      file = fixture_file_upload(Rails.root.join("/logo.png"), "image/png")
-      field.value.attach(file)
+      field = described_class.new value: fixture_file_upload("logo.png")
+
       expect(field.to_s).to eq("logo.png")
     end
   end
 
   describe "#to_html" do
     it "returns an HTML img tag for the image" do
-      field = described_class.new(name: "Image Field", container: container)
-      file = fixture_file_upload(Rails.root.join("/logo.png"), "image/png")
-      field.value.attach(file)
+      field = described_class.new value: fixture_file_upload("logo.png")
 
       allow(field.value).to receive(:url).and_return("/rails/active_storage/blobs/logo.png")
       expect(field.to_html).to eq("<img src='/rails/active_storage/blobs/logo.png' alt='logo.png'>")
-    end
-  end
-
-  describe "#copy_into" do
-    let(:collection) { double("collection") }
-
-    it "copies itself into the collection" do
-      field = described_class.new(name: "Original Image", data_field_type: :form_field_definition)
-      allow(collection).to receive(:where).with(copied_from: field).and_return(double(first_or_create!: :copied))
-
-      result = field.copy_into(collection)
-      expect(result).to eq(:copied)
     end
   end
 end

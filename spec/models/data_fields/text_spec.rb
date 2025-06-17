@@ -5,8 +5,9 @@ RSpec.describe DataFields::Text, type: :model do
 
   describe "#to_html" do
     it "returns the value as a string" do
-      field = described_class.new(value: "Display this", container: container)
-      expect(field.to_html).to eq("Display this")
+      field = described_class.new value: "Display this"
+
+      expect(field.to_html).to eq "Display this"
     end
   end
 end

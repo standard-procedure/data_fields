@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe DataFields::Checkbox, type: :model do
-  it_behaves_like "a field"
+  it_behaves_like "a field", check_required: false
 
   describe "#value" do
     it "accepts form field values" do

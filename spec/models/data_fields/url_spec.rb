@@ -5,7 +5,8 @@ RSpec.describe DataFields::Url, type: :model do
 
   describe "#to_html" do
     it "returns the value as a string" do
-      field = described_class.new(value: "https://example.com", container: container)
+      field = described_class.new value: "https://example.com"
+
       expect(field.to_html).to eq("https://example.com")
     end
   end
